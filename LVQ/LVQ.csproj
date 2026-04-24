@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\LVQClassifier.cs" />
     <Compile Include="Data\ArffReader.cs" />
     <Compile Include="Models\DocumentVector.cs" />
+    <Compile Include="Models\Prototype.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,7 +60,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Algorithms\" />
     <Folder Include="Evaluation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

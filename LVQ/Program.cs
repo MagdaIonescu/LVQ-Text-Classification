@@ -1,4 +1,5 @@
 ﻿using System;
+using LVQ.Algorithms;
 using LVQ.Data;
 
 namespace LVQ
@@ -19,6 +20,18 @@ namespace LVQ
                 Console.WriteLine("Prima eticheta: " + docs[0].Label);
                 Console.WriteLine("Prima valoare: " + docs[0].Features[0]);
             }
+
+            LVQClassifier lvq = new LVQClassifier(0.1, 20);
+
+            lvq.Initialize(docs);
+            lvq.Train(docs);
+
+            Console.WriteLine("Training finished!");
+
+            string predicted = lvq.Predict(docs[0].Features);
+
+            Console.WriteLine("Real: " + docs[0].Label);
+            Console.WriteLine("Predicted: " + predicted);
         }
     }
 }
