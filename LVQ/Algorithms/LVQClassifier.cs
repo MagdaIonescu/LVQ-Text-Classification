@@ -57,17 +57,35 @@ namespace LVQ.Algorithms
             return winner.Label;
         }
 
+        //private double ComputeDistance(double[] a, double[] b)
+        //{
+        //    double sum = 0;
+
+        //    for (int i = 0; i < a.Length; i++)
+        //    {
+        //        double diff = a[i] - b[i];
+        //        sum += diff * diff;
+        //    }
+
+        //    return Math.Sqrt(sum);
+        //}
+
         private double ComputeDistance(double[] a, double[] b)
         {
-            double sum = 0;
+            double dot = 0;
+            double normA = 0;
+            double normB = 0;
 
             for (int i = 0; i < a.Length; i++)
             {
-                double diff = a[i] - b[i];
-                sum += diff * diff;
+                dot += a[i] * b[i];
+                normA += a[i] * a[i];
+                normB += b[i] * b[i];
             }
+            if (normA == 0 || normB == 0)
+                return double.MaxValue;
 
-            return Math.Sqrt(sum);
+            return 1 - (dot / (Math.Sqrt(normA) * Math.Sqrt(normB)));
         }
 
         private Prototype GetClosestPrototype(double[] input)

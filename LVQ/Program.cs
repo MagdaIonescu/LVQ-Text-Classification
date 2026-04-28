@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using LVQ.Algorithms;
 using LVQ.Data;
+using LVQ.Evaluation;
+using LVQ.Models;
 
 namespace LVQ
 {
@@ -8,30 +11,34 @@ namespace LVQ
     {
         static void Main(string[] args)
         {
-            // test
+            Console.WriteLine("Loading data...");
+
             ArffReader reader = new ArffReader();
-            string path = @"Datasets\MultiClass_Training_SVM_100.0.arff";
 
-            var docs = reader.ReadDocuments(path);
+            List<DocumentVector> trainingData = reader.ReadDocuments("Datasets/MultiClass_Training_SVM_1309.0.arff");
+            List<DocumentVector> testData = reader.ReadDocuments("Datasets/MultiClass_Testing_SVM_1309.0.arff");
 
-            Console.WriteLine("Documente citite: " + docs.Count);
-            if (docs.Count > 0)
-            {
-                Console.WriteLine("Prima eticheta: " + docs[0].Label);
-                Console.WriteLine("Prima valoare: " + docs[0].Features[0]);
-            }
+            Console.WriteLine($"Training samples: {trainingData.Count}");
+            Console.WriteLine($"Testing samples: {testData.Count}");
+            Console.WriteLine();
 
-            LVQClassifier lvq = new LVQClassifier(0.1, 20);
+            // Model
+            LVQClassifier model = new LVQClassifier(learningRate: 0.1, epochs: 20);
 
-            lvq.Initialize(docs);
-            lvq.Train(docs);
+            // Train
+            Console.WriteLine("Training model...");
+            model.Initialize(trainingData);
+            model.Train(trainingData);
 
-            Console.WriteLine("Training finished!");
+            Console.WriteLine("Training complete.");
+            Console.WriteLine();
 
-            string predicted = lvq.Predict(docs[0].Features);
+            // Evaluate
+            Console.WriteLine("Evaluating model...");
+            Metrics.Evaluate(model, testData);
 
-            Console.WriteLine("Real: " + docs[0].Label);
-            Console.WriteLine("Predicted: " + predicted);
+            Console.WriteLine("Done.");
+            Console.ReadLine();
         }
     }
 }

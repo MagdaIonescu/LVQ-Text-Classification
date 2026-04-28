@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\LVQClassifier.cs" />
     <Compile Include="Data\ArffReader.cs" />
+    <Compile Include="Evaluation\Metrics.cs" />
     <Compile Include="Models\DocumentVector.cs" />
     <Compile Include="Models\Prototype.cs" />
     <Compile Include="Program.cs" />
@@ -58,9 +59,15 @@
     <Content Include="Datasets\MultiClass_Training_SVM_100.0.arff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Datasets\MultiClass_Testing_SVM_1309.0.arff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Datasets\MultiClass_Training_SVM_1309.0.arff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Evaluation\" />
+    <Folder Include="Results\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
