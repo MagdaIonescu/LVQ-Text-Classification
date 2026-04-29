@@ -22,23 +22,29 @@ namespace LVQ
             Console.WriteLine($"Testing samples: {testData.Count}");
             Console.WriteLine();
 
-            // Model
-            LVQClassifier model = new LVQClassifier(learningRate: 0.1, epochs: 20);
+            int[] prototypeValues = {1, 3, 5};
 
-            // Train
-            Console.WriteLine("Training model...");
-            model.Initialize(trainingData);
-            model.Train(trainingData);
+            foreach (var p in prototypeValues)
+            {
+                Console.WriteLine($"Prototypes per class: {p}");
 
-            Console.WriteLine("Training complete.");
-            Console.WriteLine();
+                LVQClassifier model = new LVQClassifier(p, learningRate: 0.1, epochs: 20);
 
-            // Evaluate
-            Console.WriteLine("Evaluating model...");
-            Metrics.Evaluate(model, testData);
+                // Train
+                Console.WriteLine("Training model...");
+                model.Initialize(trainingData);
+                model.Train(trainingData);
 
-            Console.WriteLine("Done.");
-            Console.ReadLine();
+                Console.WriteLine("Training complete.");
+                Console.WriteLine();
+
+                // Evaluate
+                Console.WriteLine("Evaluating model...");
+                Metrics.Evaluate(model, testData, p);
+
+                Console.WriteLine("Done.");
+                Console.WriteLine();
+            }
         }
     }
 }

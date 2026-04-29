@@ -11,9 +11,11 @@ namespace LVQ.Algorithms
 
         private double learningRate;
         private int epochs;
+        private int prototypesPerClass;
 
-        public LVQClassifier(double learningRate = 0.1, int epochs = 20)
+        public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20)
         {
+            this.prototypesPerClass = prototypesPerClass;
             this.learningRate = learningRate;
             this.epochs = epochs;
         }
@@ -21,12 +23,16 @@ namespace LVQ.Algorithms
         public void Initialize(List<DocumentVector> trainingData)
         {
             var grouped = trainingData.GroupBy(x => x.Label);
+            Random rnd = new Random(0);
 
             foreach (var group in grouped)
             {
-                DocumentVector first = group.First();
-
-                Prototypes.Add(new Prototype((double[])first.Features.Clone(), first.Label));
+                var samples = group.OrderBy(x => rnd.Next()).Take(prototypesPerClass);
+                foreach (var sample in samples)
+                {
+                    var prototypeVector = Normalize(sample.Features);
+                    Prototypes.Add(new Prototype(prototypeVector, sample.Label));
+                }
             }
         }
 
@@ -36,14 +42,15 @@ namespace LVQ.Algorithms
             {
                 foreach (var doc in trainingData)
                 {
-                    Prototype winner = GetClosestPrototype(doc.Features);
+                    var input = Normalize(doc.Features);
+                    Prototype winner = GetClosestPrototype(input);
 
                     if (winner.Label == doc.Label)
                     {
-                        MoveCloser(winner, doc.Features);
+                        MoveCloser(winner, input);
                     } else
                     {
-                        MoveAway(winner, doc.Features);
+                        MoveAway(winner, input);
                     }
                 }
 
@@ -53,23 +60,10 @@ namespace LVQ.Algorithms
 
         public string Predict(double[] input)
         {
-            Prototype winner = GetClosestPrototype(input);
+            var inputNorm = Normalize(input);
+            Prototype winner = GetClosestPrototype(inputNorm);
             return winner.Label;
         }
-
-        //private double ComputeDistance(double[] a, double[] b)
-        //{
-        //    double sum = 0;
-
-        //    for (int i = 0; i < a.Length; i++)
-        //    {
-        //        double diff = a[i] - b[i];
-        //        sum += diff * diff;
-        //    }
-
-        //    return Math.Sqrt(sum);
-        //}
-
         private double ComputeDistance(double[] a, double[] b)
         {
             double dot = 0;
@@ -87,7 +81,27 @@ namespace LVQ.Algorithms
 
             return 1 - (dot / (Math.Sqrt(normA) * Math.Sqrt(normB)));
         }
+        private double[] Normalize(double[] v)
+        {
+            double sum = 0;
 
+            for (int i = 0; i < v.Length; i++)
+            {
+                sum += v[i] * v[i];
+            }
+
+            double norm = Math.Sqrt(sum);
+            if (norm == 0)
+                return v;
+
+            double[] result = new double[v.Length];
+            for (int i = 0; i < v.Length; i++)
+            {
+                result[i] = v[i] / norm;
+            }
+
+            return result;
+        }
         private Prototype GetClosestPrototype(double[] input)
         {
             Prototype best = Prototypes[0];
@@ -96,7 +110,6 @@ namespace LVQ.Algorithms
             foreach (var prototype in Prototypes)
             {
                 double dist = ComputeDistance(input, prototype.Features);
-
                 if (dist < minDist)
                 {
                     minDist = dist;
