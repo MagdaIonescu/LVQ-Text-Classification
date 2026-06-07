@@ -13,13 +13,15 @@ namespace LVQ.Algorithms
         private int epochs;
         private int prototypesPerClass;
         private double windowWidth; // Used in LVQ2 and LVQ2.1 to determine if the second closest prototype is close enough to the input for an update
+        private double epsilon; // Used in LVQ 3
 
-        public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20, double windowWidth = 0.3)
+        public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20, double windowWidth = 0.3, double epsilon = 0.1)
         {
             this.prototypesPerClass = prototypesPerClass;
             this.learningRate = learningRate;
             this.epochs = epochs;
             this.windowWidth = windowWidth;
+            this.epsilon = epsilon;
         }
 
         public void Initialize(List<DocumentVector> trainingData)
@@ -125,6 +127,49 @@ namespace LVQ.Algorithms
                 }
 
                 lvq21LearningRate *= 0.95;
+            }
+        }
+
+        public void TrainLVQ3(List<DocumentVector> trainingData)
+        {
+            double lvq3LearningRate = 0.03;
+            int lvq3Epochs = 5;
+
+            for (int epoch = 0; epoch < lvq3Epochs; epoch++)
+            {
+                foreach (var doc in trainingData)
+                {
+                    var input = Normalize(doc.Features);
+
+                    GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
+
+                    if (!IsInsideWindow(d1, d2))
+                        continue;
+
+                    bool m1Correct = m1.Label == doc.Label;
+                    bool m2Correct = m2.Label == doc.Label;
+
+                    if (m1Correct && m2Correct)
+                    {
+                        double adjustedLearningRate = lvq3LearningRate * epsilon;
+                        MoveCloser(m1, input, adjustedLearningRate);
+                        MoveCloser(m2, input, adjustedLearningRate);
+                    }
+                    else if (m1Correct != m2Correct)
+                    {
+                        if (m1Correct)
+                        {
+                            MoveCloser(m1, input, lvq3LearningRate);
+                            MoveAway(m2, input, lvq3LearningRate);
+                        } else
+                        {
+                            MoveCloser(m2, input, lvq3LearningRate);
+                            MoveAway(m1, input, lvq3LearningRate);
+                        }
+                    }
+                }
+
+                lvq3LearningRate *= 0.95;
             }
         }
 
