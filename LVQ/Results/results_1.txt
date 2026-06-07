@@ -3,49 +3,49 @@ Prototypes per class: 1
 Confusion Matrix:
 
 Actual    c18       c15       c11       c22       c33       c31       c13       c17       c12       c21       c14       c41       c23       gcat      ecat      m11       
-c18       97        50        2         0         4         0         1         5         0         0         0         2         0         0         0         1         
-c15       5         1170      0         1         1         0         1         3         0         0         6         1         0         0         0         4         
-c11       20        101       5         0         33        1         15        2         0         0         0         14        2         3         0         0         
-c22       11        68        13        10        48        0         18        0         0         1         0         0         1         1         0         0         
-c33       6         12        5         1         59        0         0         0         0         0         0         1         0         0         0         0         
-c31       1         50        0         0         8         0         2         0         0         0         0         1         0         0         0         0         
-c13       3         9         3         0         6         0         30        3         0         0         0         0         0         1         0         0         
-c17       5         26        0         1         1         0         0         46        0         0         13        2         0         0         0         0         
-c12       6         41        0         2         13        0         10        5         4         1         0         5         0         2         0         0         
-c21       6         19        8         0         9         0         13        2         0         0         1         1         0         0         0         0         
-c14       1         25        0         0         0         0         0         5         0         0         23        0         0         0         0         0         
-c41       1         9         0         0         1         0         0         0         0         0         0         97        0         0         0         0         
+c18       91        57        1         0         4         0         1         5         0         0         0         2         0         0         0         1         
+c15       5         1169      0         1         2         0         1         3         0         0         7         1         0         0         0         3         
+c11       16        101       6         0         33        1         20        2         0         0         0         13        2         2         0         0         
+c22       12        63        12        9         41        0         31        0         0         1         0         0         2         0         0         0         
+c33       5         12        6         1         58        0         1         0         0         0         0         1         0         0         0         0         
+c31       1         48        0         0         8         0         4         0         0         0         0         1         0         0         0         0         
+c13       1         9         2         0         4         0         36        3         0         0         0         0         0         0         0         0         
+c17       4         26        0         1         0         0         0         47        0         0         14        2         0         0         0         0         
+c12       6         39        0         2         11        0         17        5         4         1         0         3         0         1         0         0         
+c21       5         17        7         0         7         0         19        2         0         0         1         1         0         0         0         0         
+c14       1         22        0         0         0         0         0         5         0         0         26        0         0         0         0         0         
+c41       1         11        0         0         0         0         0         0         0         0         0         96        0         0         0         0         
 c23       1         4         1         0         2         0         3         0         0         0         0         0         0         0         0         0         
 gcat      0         1         0         0         0         0         2         0         0         0         0         0         0         0         0         0         
 ecat      0         9         0         0         0         0         1         0         0         0         0         0         0         0         1         0         
 m11       0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         
 
-Accuracy: 65.59%
+Accuracy: 65.63%
 
 Class: c18
-  Precision: 59.51%
-  Recall:    59.88%
-  F1-score:  59.69%
+  Precision: 61.07%
+  Recall:    56.17%
+  F1-score:  58.52%
 
 Class: c15
-  Precision: 73.40%
-  Recall:    98.15%
-  F1-score:  83.99%
+  Precision: 73.61%
+  Recall:    98.07%
+  F1-score:  84.10%
 
 Class: c11
-  Precision: 13.51%
-  Recall:    2.55%
-  F1-score:  4.29%
+  Precision: 17.14%
+  Recall:    3.06%
+  F1-score:  5.19%
 
 Class: c22
-  Precision: 66.67%
-  Recall:    5.85%
-  F1-score:  10.75%
+  Precision: 64.29%
+  Recall:    5.26%
+  F1-score:  9.73%
 
 Class: c33
-  Precision: 31.89%
-  Recall:    70.24%
-  F1-score:  43.87%
+  Precision: 34.12%
+  Recall:    69.05%
+  F1-score:  45.67%
 
 Class: c31
   Precision: 0.00%
@@ -53,14 +53,14 @@ Class: c31
   F1-score:  0.00%
 
 Class: c13
-  Precision: 31.25%
-  Recall:    54.55%
-  F1-score:  39.74%
+  Precision: 26.47%
+  Recall:    65.45%
+  F1-score:  37.70%
 
 Class: c17
-  Precision: 64.79%
-  Recall:    48.94%
-  F1-score:  55.76%
+  Precision: 65.28%
+  Recall:    50.00%
+  F1-score:  56.63%
 
 Class: c12
   Precision: 100.00%
@@ -73,14 +73,14 @@ Class: c21
   F1-score:  0.00%
 
 Class: c14
-  Precision: 53.49%
-  Recall:    42.59%
-  F1-score:  47.42%
+  Precision: 54.17%
+  Recall:    48.15%
+  F1-score:  50.98%
 
 Class: c41
-  Precision: 78.23%
-  Recall:    89.81%
-  F1-score:  83.62%
+  Precision: 80.00%
+  Recall:    88.89%
+  F1-score:  84.21%
 
 Class: c23
   Precision: 0.00%

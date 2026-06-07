@@ -37,6 +37,8 @@ namespace LVQ
                 model.TrainLVQ1(trainingData);
                 Console.WriteLine("Training model with LVQ 2 optimization...");
                 model.TrainLVQ2(trainingData);
+                Console.WriteLine("Training model with LVQ 2.1 optimization...");
+                model.TrainLVQ2_1(trainingData);
 
                 Console.WriteLine("Training complete.");
                 Console.WriteLine();

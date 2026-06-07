@@ -77,6 +77,33 @@ namespace LVQ.Algorithms
                     if (!IsInsideWindow(d1, d2))
                         continue;
 
+                    if (m1.Label != m2.Label && m1.Label != doc.Label && m2.Label == doc.Label)
+                    {
+                        MoveAway(m1, input, lvq2LearningRate);  
+                        MoveCloser(m2, input, lvq2LearningRate);
+                    }
+                }
+
+                lvq2LearningRate *= 0.95;
+            }
+        }
+
+        public void TrainLVQ2_1(List<DocumentVector> trainingData)
+        {
+            double lvq21LearningRate = 0.03;
+            int lvq21Epochs = 5;
+
+            for (int epoch = 0; epoch < lvq21Epochs; epoch++)
+            {
+                foreach (var doc in trainingData)
+                {
+                    var input = Normalize(doc.Features);
+
+                    GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
+
+                    if (!IsInsideWindow(d1, d2))
+                        continue;
+
                     if (m1.Label == m2.Label)
                         continue;
 
@@ -88,22 +115,17 @@ namespace LVQ.Algorithms
 
                     if (m1Correct)
                     {
-                        MoveCloser(m1, input, lvq2LearningRate);
-                        MoveAway(m2, input, lvq2LearningRate);
+                        MoveCloser(m1, input, lvq21LearningRate);
+                        MoveAway(m2, input, lvq21LearningRate);
                     } else
                     {
-                        MoveCloser(m2, input, lvq2LearningRate);
-                        MoveAway(m1, input, lvq2LearningRate);
+                        MoveCloser(m2, input, lvq21LearningRate);
+                        MoveAway(m1, input, lvq21LearningRate);
                     }
                 }
 
-                lvq2LearningRate *= 0.95;
+                lvq21LearningRate *= 0.95;
             }
-        }
-
-        public void TrainLVQ2_1(List<DocumentVector> trainingData)
-        {
-            // TO-DO: Implement LVQ2.1, which is similar to LVQ2 but with a different windowing function and update rules
         }
 
         public string Predict(double[] input)
