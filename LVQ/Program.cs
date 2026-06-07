@@ -28,12 +28,15 @@ namespace LVQ
             {
                 Console.WriteLine($"Prototypes per class: {p}");
 
-                LVQClassifier model = new LVQClassifier(p, learningRate: 0.1, epochs: 20);
+                LVQClassifier model = new LVQClassifier(p, learningRate: 0.1, epochs: 20, windowWidth: 0.3);
 
                 // Train
-                Console.WriteLine("Training model...");
                 model.Initialize(trainingData);
-                model.Train(trainingData);
+
+                Console.WriteLine("Training model with LVQ 1...");
+                model.TrainLVQ1(trainingData);
+                Console.WriteLine("Training model with LVQ 2 optimization...");
+                model.TrainLVQ2(trainingData);
 
                 Console.WriteLine("Training complete.");
                 Console.WriteLine();
