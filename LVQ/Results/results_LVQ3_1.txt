@@ -1,3 +1,4 @@
+Version: LVQ3
 Prototypes per class: 1
 
 Confusion Matrix:
@@ -20,85 +21,85 @@ gcat      0         1         0         0         0         0         2         
 ecat      0         9         0         0         0         0         1         0         0         0         0         0         0         0         1         0         
 m11       0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         
 
-Accuracy: 65.84%
+Accuracy: 65,84%
 
 Class: c18
-  Precision: 62.67%
-  Recall:    58.02%
-  F1-score:  60.26%
+  Precision: 62,67%
+  Recall:    58,02%
+  F1-score:  60,26%
 
 Class: c15
-  Precision: 73.32%
-  Recall:    98.24%
-  F1-score:  83.97%
+  Precision: 73,32%
+  Recall:    98,24%
+  F1-score:  83,97%
 
 Class: c11
-  Precision: 18.18%
-  Recall:    3.06%
-  F1-score:  5.24%
+  Precision: 18,18%
+  Recall:    3,06%
+  F1-score:  5,24%
 
 Class: c22
-  Precision: 64.29%
-  Recall:    5.26%
-  F1-score:  9.73%
+  Precision: 64,29%
+  Recall:    5,26%
+  F1-score:  9,73%
 
 Class: c33
-  Precision: 34.76%
-  Recall:    67.86%
-  F1-score:  45.97%
+  Precision: 34,76%
+  Recall:    67,86%
+  F1-score:  45,97%
 
 Class: c31
-  Precision: 0.00%
-  Recall:    0.00%
-  F1-score:  0.00%
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
 
 Class: c13
-  Precision: 27.56%
-  Recall:    63.64%
-  F1-score:  38.46%
+  Precision: 27,56%
+  Recall:    63,64%
+  F1-score:  38,46%
 
 Class: c17
-  Precision: 62.03%
-  Recall:    52.13%
-  F1-score:  56.65%
+  Precision: 62,03%
+  Recall:    52,13%
+  F1-score:  56,65%
 
 Class: c12
-  Precision: 100.00%
-  Recall:    4.49%
-  F1-score:  8.60%
+  Precision: 100,00%
+  Recall:    4,49%
+  F1-score:  8,60%
 
 Class: c21
-  Precision: 0.00%
-  Recall:    0.00%
-  F1-score:  0.00%
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
 
 Class: c14
-  Precision: 55.32%
-  Recall:    48.15%
-  F1-score:  51.49%
+  Precision: 55,32%
+  Recall:    48,15%
+  F1-score:  51,49%
 
 Class: c41
-  Precision: 79.34%
-  Recall:    88.89%
-  F1-score:  83.84%
+  Precision: 79,34%
+  Recall:    88,89%
+  F1-score:  83,84%
 
 Class: c23
-  Precision: 0.00%
-  Recall:    0.00%
-  F1-score:  0.00%
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
 
 Class: gcat
-  Precision: 0.00%
-  Recall:    0.00%
-  F1-score:  0.00%
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
 
 Class: ecat
-  Precision: 100.00%
-  Recall:    9.09%
-  F1-score:  16.67%
+  Precision: 100,00%
+  Recall:    9,09%
+  F1-score:  16,67%
 
 Class: m11
-  Precision: 0.00%
-  Recall:    0.00%
-  F1-score:  0.00%
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
 

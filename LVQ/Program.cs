@@ -12,7 +12,6 @@ namespace LVQ
         static void Main(string[] args)
         {
             Console.WriteLine("Loading data...");
-
             ArffReader reader = new ArffReader();
 
             List<DocumentVector> trainingData = reader.ReadDocuments("Datasets/MultiClass_Training_SVM_1309.0.arff");
@@ -28,27 +27,24 @@ namespace LVQ
             {
                 Console.WriteLine($"Prototypes per class: {p}");
 
-                LVQClassifier model = new LVQClassifier(p, learningRate: 0.1, epochs: 20, windowWidth: 0.3, epsilon: 0.1);
+                LVQClassifier model = new LVQClassifier(p);
 
-                // Train
                 model.Initialize(trainingData);
-
                 Console.WriteLine("Training model with LVQ 1...");
                 model.TrainLVQ1(trainingData);
+                Metrics.Evaluate(model, testData, p, "LVQ1");
+
                 Console.WriteLine("Training model with LVQ 2 optimization...");
                 model.TrainLVQ2(trainingData);
+                Metrics.Evaluate(model, testData, p, "LVQ2");
+
                 Console.WriteLine("Training model with LVQ 2.1 optimization...");
                 model.TrainLVQ2_1(trainingData);
+                Metrics.Evaluate(model, testData, p, "LVQ2_1");
+
                 Console.WriteLine("Training model with LVQ 3 optimization...");
                 model.TrainLVQ3(trainingData);
-
-
-                Console.WriteLine("Training complete.");
-                Console.WriteLine();
-
-                // Evaluate
-                Console.WriteLine("Evaluating model...");
-                Metrics.Evaluate(model, testData, p);
+                Metrics.Evaluate(model, testData, p, "LVQ3");
 
                 Console.WriteLine("Done.");
                 Console.WriteLine();

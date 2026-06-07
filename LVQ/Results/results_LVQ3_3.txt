@@ -1,0 +1,105 @@
+Version: LVQ3
+Prototypes per class: 3
+
+Confusion Matrix:
+
+Actual    c18       c15       c11       c22       c33       c31       c13       c17       c12       c21       c14       c41       c23       gcat      ecat      m11       
+c18       113       11        18        1         4         0         0         8         2         0         2         3         0         0         0         0         
+c15       19        1110      17        8         6         2         1         11        2         0         13        1         0         0         0         2         
+c11       7         30        96        22        8         3         4         2         5         0         1         10        0         2         5         1         
+c22       3         3         32        115       10        1         4         0         1         1         0         0         0         1         0         0         
+c33       1         4         13        6         57        0         0         0         1         1         0         1         0         0         0         0         
+c31       1         13        14        12        6         12        0         0         1         1         0         2         0         0         0         0         
+c13       1         2         4         6         6         2         26        2         4         0         1         0         0         0         1         0         
+c17       2         5         4         0         1         0         0         55        0         0         25        2         0         0         0         0         
+c12       1         4         1         1         0         1         1         0         80        0         0         0         0         0         0         0         
+c21       0         0         11        25        1         3         8         7         1         0         2         1         0         0         0         0         
+c14       0         12        0         0         1         0         0         4         0         0         37        0         0         0         0         0         
+c41       0         5         3         1         0         0         0         1         0         0         0         98        0         0         0         0         
+c23       0         0         3         3         1         1         2         0         0         0         0         0         1         0         0         0         
+gcat      0         0         1         0         0         0         0         0         2         0         0         0         0         0         0         0         
+ecat      0         0         3         0         0         0         1         0         0         0         0         0         0         0         7         0         
+m11       0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         
+
+Accuracy: 76,86%
+
+Class: c18
+  Precision: 76,35%
+  Recall:    69,75%
+  F1-score:  72,90%
+
+Class: c15
+  Precision: 92,58%
+  Recall:    93,12%
+  F1-score:  92,85%
+
+Class: c11
+  Precision: 43,64%
+  Recall:    48,98%
+  F1-score:  46,15%
+
+Class: c22
+  Precision: 57,50%
+  Recall:    67,25%
+  F1-score:  61,99%
+
+Class: c33
+  Precision: 56,44%
+  Recall:    67,86%
+  F1-score:  61,62%
+
+Class: c31
+  Precision: 48,00%
+  Recall:    19,35%
+  F1-score:  27,59%
+
+Class: c13
+  Precision: 55,32%
+  Recall:    47,27%
+  F1-score:  50,98%
+
+Class: c17
+  Precision: 61,11%
+  Recall:    58,51%
+  F1-score:  59,78%
+
+Class: c12
+  Precision: 80,81%
+  Recall:    89,89%
+  F1-score:  85,11%
+
+Class: c21
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
+
+Class: c14
+  Precision: 45,68%
+  Recall:    68,52%
+  F1-score:  54,81%
+
+Class: c41
+  Precision: 83,05%
+  Recall:    90,74%
+  F1-score:  86,73%
+
+Class: c23
+  Precision: 100,00%
+  Recall:    9,09%
+  F1-score:  16,67%
+
+Class: gcat
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
+
+Class: ecat
+  Precision: 53,85%
+  Recall:    63,64%
+  F1-score:  58,33%
+
+Class: m11
+  Precision: 0,00%
+  Recall:    0,00%
+  F1-score:  0,00%
+

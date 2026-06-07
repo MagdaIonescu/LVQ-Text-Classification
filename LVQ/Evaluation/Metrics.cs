@@ -9,7 +9,7 @@ namespace LVQ.Evaluation
 {
     internal class Metrics
     {
-        public static void Evaluate(LVQClassifier model, List<DocumentVector> testData, int prototypes)
+        public static void Evaluate(LVQClassifier model, List<DocumentVector> testData, int prototypes, string version)
         {
             var actualLabels = testData.Select(x => x.Label).Distinct();
             var predictedLabels = testData.Select(x => model.Predict(x.Features)).Distinct();
@@ -30,7 +30,6 @@ namespace LVQ.Evaluation
             {
                 string actual = doc.Label;
                 string predicted = model.Predict(doc.Features);
-
                 confusion[actual][predicted]++;
             }
 
@@ -88,9 +87,9 @@ namespace LVQ.Evaluation
             {
                 Directory.CreateDirectory(folder);
             }
-            string path = Path.Combine(folder, $"results_{prototypes}.txt");
+            string path = Path.Combine(folder, $"results_{version}_{prototypes}.txt");
 
-            txt = $"Prototypes per class: {prototypes}\n\n" + txt;
+            txt = $"Version: {version}\n" + $"Prototypes per class: {prototypes}\n\n" + txt;
             File.WriteAllText(path, txt);
 
             Console.WriteLine("Evaluation complete.");

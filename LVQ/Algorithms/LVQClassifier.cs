@@ -15,7 +15,7 @@ namespace LVQ.Algorithms
         private double windowWidth; // Used in LVQ2 and LVQ2.1 to determine if the second closest prototype is close enough to the input for an update
         private double epsilon; // Used in LVQ 3
 
-        public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20, double windowWidth = 0.3, double epsilon = 0.1)
+        public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20, double windowWidth = 0.3, double epsilon = 0.2)
         {
             this.prototypesPerClass = prototypesPerClass;
             this.learningRate = learningRate;
@@ -52,13 +52,14 @@ namespace LVQ.Algorithms
                     if (winner.Label == doc.Label)
                     {
                         MoveCloser(winner, input, learningRate);
-                    } else
+                    }
+                    else
                     {
                         MoveAway(winner, input, learningRate);
                     }
                 }
 
-                learningRate *= 0.95; 
+                learningRate *= 0.95;
             }
         }
 
@@ -73,19 +74,16 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-
                     GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
-
                     if (!IsInsideWindow(d1, d2))
                         continue;
 
                     if (m1.Label != m2.Label && m1.Label != doc.Label && m2.Label == doc.Label)
                     {
-                        MoveAway(m1, input, lvq2LearningRate);  
+                        MoveAway(m1, input, lvq2LearningRate);
                         MoveCloser(m2, input, lvq2LearningRate);
                     }
                 }
-
                 lvq2LearningRate *= 0.95;
             }
         }
@@ -100,7 +98,6 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-
                     GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
 
                     if (!IsInsideWindow(d1, d2))
@@ -119,13 +116,13 @@ namespace LVQ.Algorithms
                     {
                         MoveCloser(m1, input, lvq21LearningRate);
                         MoveAway(m2, input, lvq21LearningRate);
-                    } else
+                    }
+                    else
                     {
                         MoveCloser(m2, input, lvq21LearningRate);
                         MoveAway(m1, input, lvq21LearningRate);
                     }
                 }
-
                 lvq21LearningRate *= 0.95;
             }
         }
@@ -140,7 +137,6 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-
                     GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
 
                     if (!IsInsideWindow(d1, d2))
@@ -161,14 +157,14 @@ namespace LVQ.Algorithms
                         {
                             MoveCloser(m1, input, lvq3LearningRate);
                             MoveAway(m2, input, lvq3LearningRate);
-                        } else
+                        }
+                        else
                         {
                             MoveCloser(m2, input, lvq3LearningRate);
                             MoveAway(m1, input, lvq3LearningRate);
                         }
                     }
                 }
-
                 lvq3LearningRate *= 0.95;
             }
         }
@@ -201,7 +197,6 @@ namespace LVQ.Algorithms
         private double[] Normalize(double[] v)
         {
             double sum = 0;
-
             for (int i = 0; i < v.Length; i++)
             {
                 sum += v[i] * v[i];
@@ -216,7 +211,6 @@ namespace LVQ.Algorithms
             {
                 result[i] = v[i] / norm;
             }
-
             return result;
         }
 
@@ -234,7 +228,6 @@ namespace LVQ.Algorithms
                     best = prototype;
                 }
             }
-
             return best;
         }
 
@@ -270,7 +263,7 @@ namespace LVQ.Algorithms
                     min2 = min1;
                     best1 = prototype;
                     min1 = distrance;
-                } 
+                }
                 else if (distrance < min2)
                 {
                     best2 = prototype;
@@ -281,9 +274,9 @@ namespace LVQ.Algorithms
 
         private bool IsInsideWindow(double d1, double d2)
         {
-            if (d1 == 0 && d2 == 0) 
+            if (d1 == 0 && d2 == 0)
                 return true;
-            if (d1 == 0 || d2 == 0) 
+            if (d1 == 0 || d2 == 0)
                 return false;
 
             double s = (1.0 - windowWidth) / (1.0 + windowWidth);
