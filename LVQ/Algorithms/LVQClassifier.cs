@@ -12,8 +12,8 @@ namespace LVQ.Algorithms
         private double learningRate;
         private int epochs;
         private int prototypesPerClass;
-        private double windowWidth; // Used in LVQ2 and LVQ2.1 to determine if the second closest prototype is close enough to the input for an update
-        private double epsilon; // Used in LVQ 3
+        private double windowWidth; 
+        private double epsilon; 
 
         public LVQClassifier(int prototypesPerClass, double learningRate = 0.1, int epochs = 20, double windowWidth = 0.3, double epsilon = 0.2)
         {
@@ -65,7 +65,6 @@ namespace LVQ.Algorithms
 
         public void TrainLVQ2(List<DocumentVector> trainingData)
         {
-            // fine-tuning for LVQ2, smaller learning rate and fewer epochs than LVQ1
             double lvq2LearningRate = 0.03;
             int lvq2Epochs = 5;
 
@@ -74,14 +73,14 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-                    GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
-                    if (!IsInsideWindow(d1, d2))
+                    GetTwoClosestPrototypes(input, out Prototype winner, out double winnerDistance, out Prototype runnerUp, out double runnerUpDistance);
+                    if (!IsInsideWindow(winnerDistance, runnerUpDistance))
                         continue;
 
-                    if (m1.Label != m2.Label && m1.Label != doc.Label && m2.Label == doc.Label)
+                    if (winner.Label != runnerUp.Label && winner.Label != doc.Label && runnerUp.Label == doc.Label)
                     {
-                        MoveAway(m1, input, lvq2LearningRate);
-                        MoveCloser(m2, input, lvq2LearningRate);
+                        MoveAway(winner, input, lvq2LearningRate);
+                        MoveCloser(runnerUp, input, lvq2LearningRate);
                     }
                 }
                 lvq2LearningRate *= 0.95;
@@ -98,29 +97,29 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-                    GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
+                    GetTwoClosestPrototypes(input, out Prototype winner, out double winnerDistance, out Prototype runnerUp, out double runnerUpDistance);
 
-                    if (!IsInsideWindow(d1, d2))
+                    if (!IsInsideWindow(winnerDistance, runnerUpDistance))
                         continue;
 
-                    if (m1.Label == m2.Label)
+                    if (winner.Label == runnerUp.Label)
                         continue;
 
-                    bool m1Correct = m1.Label == doc.Label;
-                    bool m2Correct = m2.Label == doc.Label;
+                    bool winnerCorrect = winner.Label == doc.Label;
+                    bool runnerUpCorrect = runnerUp.Label == doc.Label;
 
-                    if (m1Correct == m2Correct)
+                    if (winnerCorrect == runnerUpCorrect)
                         continue;
 
-                    if (m1Correct)
+                    if (winnerCorrect)
                     {
-                        MoveCloser(m1, input, lvq21LearningRate);
-                        MoveAway(m2, input, lvq21LearningRate);
+                        MoveCloser(winner, input, lvq21LearningRate);
+                        MoveAway(runnerUp, input, lvq21LearningRate);
                     }
                     else
                     {
-                        MoveCloser(m2, input, lvq21LearningRate);
-                        MoveAway(m1, input, lvq21LearningRate);
+                        MoveCloser(runnerUp, input, lvq21LearningRate);
+                        MoveAway(winner, input, lvq21LearningRate);
                     }
                 }
                 lvq21LearningRate *= 0.95;
@@ -137,31 +136,31 @@ namespace LVQ.Algorithms
                 foreach (var doc in trainingData)
                 {
                     var input = Normalize(doc.Features);
-                    GetTwoClosestPrototypes(input, out Prototype m1, out double d1, out Prototype m2, out double d2);
+                    GetTwoClosestPrototypes(input, out Prototype winner, out double winnerDistance, out Prototype runnerUp, out double runnerUpDistance);
 
-                    if (!IsInsideWindow(d1, d2))
+                    if (!IsInsideWindow(winnerDistance, runnerUpDistance))
                         continue;
 
-                    bool m1Correct = m1.Label == doc.Label;
-                    bool m2Correct = m2.Label == doc.Label;
+                    bool winnerCorrect = winner.Label == doc.Label;
+                    bool runnerUpCorrect = runnerUp.Label == doc.Label;
 
-                    if (m1Correct && m2Correct)
+                    if (winnerCorrect && runnerUpCorrect)
                     {
                         double adjustedLearningRate = lvq3LearningRate * epsilon;
-                        MoveCloser(m1, input, adjustedLearningRate);
-                        MoveCloser(m2, input, adjustedLearningRate);
+                        MoveCloser(winner, input, adjustedLearningRate);
+                        MoveCloser(runnerUp, input, adjustedLearningRate);
                     }
-                    else if (m1Correct != m2Correct)
+                    else if (winnerCorrect != runnerUpCorrect)
                     {
-                        if (m1Correct)
+                        if (winnerCorrect)
                         {
-                            MoveCloser(m1, input, lvq3LearningRate);
-                            MoveAway(m2, input, lvq3LearningRate);
+                            MoveCloser(winner, input, lvq3LearningRate);
+                            MoveAway(runnerUp, input, lvq3LearningRate);
                         }
                         else
                         {
-                            MoveCloser(m2, input, lvq3LearningRate);
-                            MoveAway(m1, input, lvq3LearningRate);
+                            MoveCloser(runnerUp, input, lvq3LearningRate);
+                            MoveAway(winner, input, lvq3LearningRate);
                         }
                     }
                 }
@@ -247,40 +246,40 @@ namespace LVQ.Algorithms
             }
         }
 
-        private void GetTwoClosestPrototypes(double[] input, out Prototype best1, out double min1, out Prototype best2, out double min2)
+        private void GetTwoClosestPrototypes(double[] input, out Prototype winner, out double winnerDistance, out Prototype runnerUp, out double runnerUpDistance)
         {
-            best1 = null;
-            best2 = null;
-            min1 = double.MaxValue;
-            min2 = double.MaxValue;
+            winner = null;
+            runnerUp = null;
+            winnerDistance = double.MaxValue;
+            runnerUpDistance = double.MaxValue;
 
             foreach (var prototype in Prototypes)
             {
-                double distrance = ComputeDistance(input, prototype.Features);
-                if (distrance < min1)
+                double distance = ComputeDistance(input, prototype.Features);
+                if (distance < winnerDistance)
                 {
-                    best2 = best1;
-                    min2 = min1;
-                    best1 = prototype;
-                    min1 = distrance;
+                    runnerUp = winner;
+                    runnerUpDistance = winnerDistance;
+                    winner = prototype;
+                    winnerDistance = distance;
                 }
-                else if (distrance < min2)
+                else if (distance < runnerUpDistance)
                 {
-                    best2 = prototype;
-                    min2 = distrance;
+                    runnerUp = prototype;
+                    runnerUpDistance = distance;
                 }
             }
         }
 
-        private bool IsInsideWindow(double d1, double d2)
+        private bool IsInsideWindow(double winnerDistance, double runnerUpDistance)
         {
-            if (d1 == 0 && d2 == 0)
+            if (winnerDistance == 0 && runnerUpDistance == 0)
                 return true;
-            if (d1 == 0 || d2 == 0)
+            if (winnerDistance == 0 || runnerUpDistance == 0)
                 return false;
 
             double s = (1.0 - windowWidth) / (1.0 + windowWidth);
-            double ratio = Math.Min(d1 / d2, d2 / d1);
+            double ratio = Math.Min(winnerDistance / runnerUpDistance, runnerUpDistance / winnerDistance);
 
             return ratio > s;
         }
